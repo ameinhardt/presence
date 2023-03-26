@@ -124,7 +124,7 @@ export default defineConfig((config: ConfigEnv): UserConfig => {
       }
     };
   return {
-    base: './',
+    base: BASE_URL,
     plugins: [
       TransformHtmlPlugin(environment.NODE_ENV !== 'development'),
       Virtual({
