@@ -63,7 +63,7 @@ const cwd = path.dirname(fileURLToPath(import.meta.url)),
                 "font-src 'self' data:",
                 "frame-src 'none'",
                 "img-src 'self' data:",
-                'script-src \'self\' \'sha256-WqjfwHIDnCtY5qx/f9cy6zvBzTdnSFjUGksN7W1OYhE=\'',
+                'script-src \'self\' \'sha256-TdVAEkz2O8cFZ8MjkbEC2WKQMxKMyVAKho96jFlDixE=\'',
                 "script-src-attr 'none'",
                 'style-src \'self\' \'sha256-QdW0Dgs8JJzzLde7S+TTJz94ftFWNWFdmVlNUU4qZYY=\'',
                 "object-src 'none';upgrade-insecure-requests"
@@ -115,7 +115,7 @@ export default defineConfig((config: ConfigEnv): UserConfig => {
         theme_color: '#000000',
         icons: [36, 48, 72, 96, 144, 192, 256, 384, 512]
           .map((size) => ({
-            src: `/icons/favicons/android-chrome-${size}x${size}.png`,
+            src: `${BASE_URL}icons/favicons/android-chrome-${size}x${size}.png`,
             sizes: `${size}x${size}`,
             type: 'image/png',
             purpose: 'any maskable'
