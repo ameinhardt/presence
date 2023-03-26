@@ -26,7 +26,10 @@
       },
       "searchUser": {
         "title": "Suche Nutzer"
-      }
+      },
+      "noAadUser": "Fehler beim Abrufen von Informationen. Vielleicht ist das kein AAD-Benutzer?",
+      "greeting": "Hallo {0}!",
+      "signInFirst": "Bitte melde dich erst an"
     }
   },
   "components": {

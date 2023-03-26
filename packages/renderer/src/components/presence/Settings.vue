@@ -107,10 +107,10 @@ defineEmits<{
 }>();
 
 async function save() {
-  profile.refreshToken = temporaryConfig.refreshToken;
+  profile.refreshToken = temporaryConfig.refreshToken || undefined;
   profile.popupHelp = temporaryConfig.popupHelp ?? false;
   profile.popupSettings = temporaryConfig.popupSettings ?? false;
-  await profile.login();
+  await (profile.refreshToken ? profile.login() : profile.logout());
   // await profile.login();
 }
 

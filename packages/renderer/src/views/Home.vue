@@ -32,25 +32,26 @@
         <button
           class="btn btn-ghost btn-circle btn-sm"
           :disabled="profile.refreshToken == null"
-          @click="profile.accessToken ? profile.logout() : profile.login()"
+          @click="(profile.refreshToken && profile.accessToken) ? profile.logout() : profile.login()"
         >
           <icon-mdi-logout v-if="profile.accessToken" />
           <icon-mdi-login v-else />
         </button>
       </template>
+      <div v-if="loadingMyself" />
       <div
-        v-if="myselfError"
-        class="alert alert-warning mt-4"
+        v-else-if="myselfError"
+        class="alert alert-warning mt-8 max-w-lg mx-auto"
       >
         <icon-mdi-alert-circle-outline />
         <span class="flex-1">
-          Error retrieving information. Maybe it's not an AAD user?
+          {{ $t('pages.home.noAadUser') }}
         </span>
       </div>
       <div
         v-else-if="myself"
       >
-        Hello {{ myself?.givenName }}!
+        {{ $t('pages.home.greeting', [myself?.givenName]) }}
         <span
           v-if="myself.presence?.availability"
           class="ml-2 badge"
@@ -59,9 +60,15 @@
           {{ myself.presence.availability }}
         </span>
       </div>
-      <template v-else>
-        sign in first, please
-      </template>
+      <div
+        v-else
+        class="alert alert-info mt-8 max-w-xs mx-auto"
+      >
+        <icon-mdi-alert-circle-outline />
+        <span class="flex-1">
+          {{ $t('pages.home.signInFirst') }}
+        </span>
+      </div>
     </Card>
   </div>
 </template>
@@ -98,7 +105,7 @@ async function authFetch<T>(url: RequestInfo | URL, fetchConfig?: RequestInit): 
 }
 
 const
-  { state: myself, execute: getMyself, error: myselfError } = useAsyncState<User | null>(async () => {
+  { state: myself, execute: getMyself, error: myselfError, isLoading: loadingMyself } = useAsyncState<User | null>(async () => {
     if (!profile.accessToken) {
       return null;
     }

@@ -23,7 +23,7 @@
           >developer.microsoft.com/graph/graph-explorer</a>, melde dich mit deinem AAD (nicht MSA) Konto an und kopiere den {{ $t('pages.home.settings.refreshToken') }} mit dem Bookmark.
         </li>
         <li>
-          Komm hierher zurück und füge den {{ $t('pages.home.settings.refreshToken') }} aus deiner Zwischenablage hier ein.
+          Komm hierher zurück und füge den {{ $t('pages.home.settings.refreshToken') }} aus deiner Zwischenablage in <span class="font-mono">{{ $t('pages.home.settings.title') }}</span> &gt; <span class="font-mono">{{ $t('pages.home.settings.refreshToken') }}</span> ein.
         </li>
       </ol>
       <ol v-else>
@@ -41,7 +41,7 @@
           >developer.microsoft.com/graph/graph-explorer</a>, sign in with your AAD (not MSA) account and copy the {{ $t('pages.home.settings.refreshToken') }} with the bookmark.
         </li>
         <li>
-          Come back here and paste the {{ $t('pages.home.settings.refreshToken') }} from your clipboard here.
+          Come back here and paste the {{ $t('pages.home.settings.refreshToken') }} from your clipboard to <span class="font-mono">{{ $t('pages.home.settings.title') }}</span> &gt; <span class="font-mono">{{ $t('pages.home.settings.refreshToken') }}</span>.
         </li>
       </ol>
     </div>

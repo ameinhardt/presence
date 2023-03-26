@@ -26,7 +26,10 @@
       },
       "searchUser": {
         "title": "Search User"
-      }
+      },
+      "noAadUser": "Error retrieving information. Maybe it's not an AAD user?",
+      "greeting": "Hello {0}!",
+      "signInFirst": "Sign in first, please"
     }
   },
   "components": {

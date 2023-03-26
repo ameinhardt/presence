@@ -177,13 +177,13 @@ async function postTokenEndpoint(parameters: URLSearchParams): Promise<TokenResp
     error.cause = data;
     throw error;
   }
-  console.debug('auth response body', data);
+  // console.debug('auth response body', data);
   // return data as TokenTripple
   return data;
 }
 
 export async function getToken(routeParameters: OAuthParameters, { code: codeVerifier, state, nonce }: Verifier): Promise<AuthInfo> {
-  console.debug('getting token');
+  // console.debug('getting token');
   /*
   const parameterNames = ['code', 'state', 'session_state', 'error', 'error_description', 'error_uri'] as Array<keyof OAuthParameters>, ;
   */
@@ -198,7 +198,7 @@ export async function getToken(routeParameters: OAuthParameters, { code: codeVer
   if (routeParameters.state !== state) {
     throw new Error('state does\'t match');
   } else {
-    console.debug('state matches');
+    // console.debug('state matches');
   }
 
   const parameters = new URLSearchParams();
@@ -209,7 +209,7 @@ export async function getToken(routeParameters: OAuthParameters, { code: codeVer
   parameters.append('code_verifier', codeVerifier);
   parameters.append('grant_type', 'authorization_code');
   parameters.append('resource', 'https://graph.microsoft.com/');
-  console.debug('sending token request');
+  // console.debug('sending token request');
 
   const { access_token, refresh_token, id_token, expires_on } = await postTokenEndpoint(parameters);
   let id: IdToken | undefined;
@@ -223,7 +223,7 @@ export async function getToken(routeParameters: OAuthParameters, { code: codeVer
   if (id?.nonce !== nonce) {
     throw new Error('nonce don\'t match!');
   } else {
-    console.debug('nonce matches');
+    // console.debug('nonce matches');
   }
 
   return {
@@ -236,14 +236,14 @@ export async function getToken(routeParameters: OAuthParameters, { code: codeVer
 }
 
 export async function refresh(refreshToken: string, scope = SCOPE): Promise<RefreshAuthInfo> {
-  console.debug('refreshing token');
+  // console.debug('refreshing token');
   const parameters = new URLSearchParams();
   parameters.append('grant_type', 'refresh_token');
   parameters.append('refresh_token', refreshToken);
   parameters.append('client_id', AUTH_CLIENT_ID);
   parameters.append('scope', scope);
 
-  console.debug('sending token refresh request');
+  // console.debug('sending token refresh request');
   const { access_token, refresh_token, expires_on } = await postTokenEndpoint(parameters);
 
   return {

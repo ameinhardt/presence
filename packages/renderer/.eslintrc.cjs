@@ -8,7 +8,7 @@ module.exports = {
   },
   ignorePatterns: ['components.d.ts', 'index.html'],
   rules: {
-    'no-console': ['warn', { allow: ['log', 'debug', 'info', 'warn', 'error'] }],
+    'no-console': ['warn', { allow: ['log', 'info', 'warn', 'error'] }],
     'import/no-unresolved': ['error', {
       ignore: ['^~icons/', '^virtual:.*']
     }],

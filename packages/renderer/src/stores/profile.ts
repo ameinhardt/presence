@@ -65,10 +65,6 @@ export const useProfileStore = defineStore('profile', () => {
     prefersDark.value = !prefersDark.value;
   }
 
-  if (refreshToken.value) {
-    login();
-  }
-
   /* refreshToken is updated on a refresh -> endless cycle
     watch(refreshToken, (newToken, oldToken) => {
     if (newToken) {

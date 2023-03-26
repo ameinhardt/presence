@@ -38,7 +38,7 @@ const SUPPORTED_LOCALES = Object.keys(locales) as Array<langs>,
 async function loadLocaleMessages(composer: Composer, locale: langs): Promise<void> {
   // load locale messages with dynamic import
   const messages = await locales[locale]();
-  console.debug(`setting sourceLocale ${locale}`);
+  // console.debug(`setting sourceLocale ${locale}`);
   // set locale and locale message
   composer.mergeLocaleMessage(locale, messages);
 

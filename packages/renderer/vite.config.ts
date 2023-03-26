@@ -59,7 +59,7 @@ const cwd = path.dirname(fileURLToPath(import.meta.url)),
               content: [
                 "default-src 'self'",
                 "base-uri 'self'",
-                "connect-src 'self'",
+                "connect-src 'self' https://login.microsoftonline.com/common/ https://graph.microsoft.com/beta/ https://graph.microsoft.com/v1.0/",
                 "form-action 'self'",
                 "font-src 'self' data:",
                 "frame-src 'none'",
