@@ -1,0 +1,43 @@
+{
+  "language": "Sprache",
+  "lightMode": "Hell",
+  "darkMode": "Dunkel",
+  "cancel": "Abbrechen",
+  "save": "Speichern",
+  "reset": "Zurücksetzen",
+  "pages": {
+    "about": {
+      "title": "Über",
+      "author": "Author",
+      "version": "Version",
+      "description": "Beschreibung"
+    },
+    "home": {
+      "title": "Übersicht",
+      "settings": {
+        "popupSettings": "Einstellungen als Popup?",
+        "popupHelp": "Hilfe als Popup?",
+        "refreshToken": "Refresh-Token",
+        "title": "Einstellungen",
+        "pasteHere": "Hier einfügen oder tippen"
+      },
+      "help": {
+        "title": "Wie es funktioniert"
+      },
+      "searchUser": {
+        "title": "Suche Nutzer"
+      }
+    }
+  },
+  "components": {
+    "updatePrompt": {
+      "updateAvailable": "Ein Update ist verfügbar!",
+      "update": "Update"
+    },
+    "licenses": {
+      "search": "Name eingeben",
+      "loadError": "Lizenzen konnten nicht abgerufen werden"
+    }
+  },
+  "search": "Suche"
+}

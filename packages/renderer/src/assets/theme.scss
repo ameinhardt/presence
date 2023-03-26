@@ -1,0 +1,52 @@
+#app {
+  color-scheme: light;
+  // required
+  --p: 22.16, 100%, 65.49%; // almost coral, so that it aligns with teal, #ff904f
+  --s: 180, 100%, 19.41%; // almost teal, #006363 to have WCAG 2.1 AAA contrast
+  --a: 276.17, 100%, 41.96%; // light violet, #8100d6
+  --n: 22.5, 14.29%, 21.96%;  // greybrown, #403630
+  --b1: 0, 0%, 100%;
+
+  // optional
+  --pf: 22.16, 100%, 55.49%; // primary-focus
+  --pc: 0, 0%, 12.94%; // primary-content, #212121
+  --sf: 180, 100%, 9.41%; // secondary-focus
+  --sc: 0, 0%, 100%; // secondary-content
+  --af: 276.17, 100%, 31.96%; // accent-focus
+  --ac: 0, 0%, 98.82%; // accent-content, #FCFCFC
+  --nc: 0, 0%, 80%; // neutral-content, #CCCCCC
+  --nf: 0, 0%, 21.96%; // neutral-focus
+  --b2: 220, 14.29%, 95.88%; // base-200, gray-100
+  --b3: 220, 13.04%, 90.98%; // base-300 // gray-200
+  --bc: 215, 27.91%, 16.86%; // base-content // gray-800
+
+  --in: 220, 100%, 70%; // info, #6699FF
+  --inc: 0, 0%, 5.1%; // info-content, #0D0D0D
+
+  --su: 136.96, 100%, 37.45%; // success, #00BF36
+  --suc: 0, 0%, 10.2%; // success-content, #1A1A1A
+  --wa: 41.41, 100%, 50%; // warning, #FFB000
+  --wac: 0, 0%, 18.82%; // warning-content, #303030
+  --er: 0, 100%, 35.49%; // error, #B50000
+  --erc: 0, 0%, 100%; // error-content
+
+  &.dark {
+    color-scheme: dark;
+    --b1: 215, 27.91%, 16.86%; // gray-800
+    --b2: 220.91, 39.29%, 10.98%; // gray-900
+    --b3: 0, 0%, 0%;
+    --bc: 0, 0%, 70.2%; // #B3B3B3
+  }
+
+  // other
+  --rounded-box: 1rem;
+  --rounded-btn: 0.5rem;
+  --rounded-badge: 1.9rem;
+  --animation-btn: 0.25s;
+  --animation-input: 0.2s;
+  --btn-text-case: uppercase;
+  --btn-focus-scale: 0.95;
+  --border-btn: 1px;
+  --tab-border: 1px;
+  --tab-radius: 0.5rem;
+}

@@ -1,0 +1,73 @@
+name: Deploy static content to Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  BASE_URL: /presence
+  VITE_AUTH_CLIENT_ID: 'de8bc8b5-d9f9-48b1-a8ad-b748da725064'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - uses: pnpm/action-setup@v2.0.1
+      name: Install pnpm
+      id: pnpm-install
+      with:
+        version: 7
+        run_install: false
+
+    - name: Get pnpm store directory
+      id: pnpm-cache
+      run: |
+        echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+
+    - uses: actions/cache@v3
+      name: Setup pnpm cache
+      with:
+        path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-store-
+
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+
+    - name: Build
+      run: pnpm build:renderer
+
+    - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v1
+      with:
+        path: './packages/renderer/dist'
+
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v1

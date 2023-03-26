@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": false,
+    "esModuleInterop": true,
+    "incremental": true,
+    "lib": ["ESNext"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "./dist",
+    "sourceMap": true,
+    "strict": true,
+    "target": "ESNext",
+    "types": ["node"]
+    /* doesn't work without bundler
+    "paths": {
+      "@/*": ["src/*"]
+    } */
+  },
+  "include": [
+    "package.json",
+    "rollup.config.*",
+    "src/**/*.ts",
+    "src/**/*.d.ts"
+  ]
+}

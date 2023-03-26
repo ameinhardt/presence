@@ -1,0 +1,43 @@
+{
+  "language": "Language",
+  "lightMode": "Light",
+  "darkMode": "Dark",
+  "cancel": "Cancel",
+  "save": "Save",
+  "reset": "Reset",
+  "pages": {
+    "about": {
+      "title": "About",
+      "author": "Author",
+      "version": "Version",
+      "description": "Description"
+    },
+    "home": {
+      "title": "Home",
+      "settings": {
+        "popupHelp": "Popup help?",
+        "popupSettings": "Popup settings?",
+        "refreshToken": "Refresh token",
+        "title": "Settings",
+        "pasteHere": "Type or paste here"
+      },
+      "help": {
+        "title": "How it works"
+      },
+      "searchUser": {
+        "title": "Search User"
+      }
+    }
+  },
+  "components": {
+    "updatePrompt": {
+      "updateAvailable": "An update is available!",
+      "update": "Update"
+    },
+    "licenses": {
+      "search": "Enter name",
+      "loadError": "Licenses could not be fetched"
+    }
+  },
+  "search": "Search"
+}

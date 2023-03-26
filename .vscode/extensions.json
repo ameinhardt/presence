@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "Vue.volar",
+    "pflannery.vscode-versionlens",
+    "ms-azuretools.vscode-docker",
+    "dbaeumer.vscode-eslint",
+    "lokalise.i18n-ally",
+    "ms-azure-devops.azure-pipelines",
+    "yzhang.markdown-all-in-one"
+  ]
+}

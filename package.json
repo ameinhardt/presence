@@ -1,0 +1,31 @@
+{
+  "name": "precense",
+  "version": "0.0.1",
+  "description": "an utility for accessing ms graph",
+  "author": "Axel Meinhardt <26243798+ameinhardt@users.noreply.github.com>",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "prepare": "husky install",
+    "build": "pnpm --filter server... --filter renderer... run build",
+    "build:renderer": "pnpm --filter renderer... build",
+    "build:server": "pnpm --filter server build",
+    "dev": "pnpm --filter server --filter renderer --parallel --aggregate-output dev",
+    "lint": "eslint --fix --ext .js . && pnpm --parallel lint",
+    "start": "pnpm --filter server start"
+  },
+  "peerDependencies": {
+    "eslint": ">=8.35.0"
+  },
+  "devDependencies": {
+    "@ameinhardt/eslint-config": "ameinhardt/eslint-config#semver:^0.1.3",
+    "@types/estree": "^1.0.0",
+    "eslint": "^8.36.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.0",
+    "typescript": "^4.9.5"
+  }
+}

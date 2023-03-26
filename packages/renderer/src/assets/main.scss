@@ -1,0 +1,81 @@
+@import "@unocss/reset/tailwind.css";
+
+@import "@kidonng/daisyui/base/index.css";
+@import "./theme.scss";
+
+@import "@kidonng/daisyui/components/unstyled/drawer.css";
+@import "@kidonng/daisyui/components/unstyled/button.css";
+@import "@kidonng/daisyui/components/unstyled/navbar.css";
+@import "@kidonng/daisyui/components/unstyled/menu.css";
+@import "@kidonng/daisyui/components/unstyled/swap.css";
+@import "@kidonng/daisyui/components/unstyled/card.css";
+@import "@kidonng/daisyui/components/unstyled/link.css";
+@import "@kidonng/daisyui/components/unstyled/tooltip.css";
+@import "@kidonng/daisyui/components/unstyled/toast.css";
+@import "@kidonng/daisyui/components/unstyled/alert.css";
+@import "@kidonng/daisyui/components/unstyled/hero.css";
+@import "@kidonng/daisyui/components/unstyled/form.css";
+@import "@kidonng/daisyui/components/unstyled/input.css";
+// @import "@kidonng/daisyui/components/unstyled/collapse.css";
+@import "@kidonng/daisyui/components/unstyled/modal.css";
+@import "@kidonng/daisyui/components/unstyled/toggle.css";
+@import "@kidonng/daisyui/components/unstyled/badge.css";
+
+@import "@kidonng/daisyui/components/styled/drawer.css";
+@import "@kidonng/daisyui/components/styled/button.css";
+@import "@kidonng/daisyui/components/styled/navbar.css";
+@import "@kidonng/daisyui/components/styled/menu.css";
+@import "@kidonng/daisyui/components/styled/swap.css";
+@import "@kidonng/daisyui/components/styled/card.css";
+@import "@kidonng/daisyui/components/styled/link.css";
+@import "@kidonng/daisyui/components/styled/tooltip.css";
+@import "@kidonng/daisyui/components/styled/toast.css";
+@import "@kidonng/daisyui/components/styled/alert.css";
+@import "@kidonng/daisyui/components/styled/hero.css";
+@import "@kidonng/daisyui/components/styled/form.css";
+@import "@kidonng/daisyui/components/styled/input.css";
+// @import "@kidonng/daisyui/components/styled/collapse.css";
+@import "@kidonng/daisyui/components/styled/modal.css";
+@import "@kidonng/daisyui/components/styled/toggle.css";
+@import "@kidonng/daisyui/components/styled/badge.css";
+
+@import "@kidonng/daisyui/utilities/unstyled/button.css";
+@import "@kidonng/daisyui/utilities/unstyled/menu.css";
+@import "@kidonng/daisyui/utilities/unstyled/card.css";
+@import "@kidonng/daisyui/utilities/unstyled/toast.css";
+@import "@kidonng/daisyui/utilities/unstyled/input.css";
+@import "@kidonng/daisyui/utilities/unstyled/modal.css";
+@import "@kidonng/daisyui/utilities/unstyled/toggle.css";
+@import "@kidonng/daisyui/utilities/unstyled/badge.css";
+
+@import "@kidonng/daisyui/utilities/styled/button.css";
+@import "@kidonng/daisyui/utilities/styled/menu.css";
+@import "@kidonng/daisyui/utilities/styled/card.css";
+@import "@kidonng/daisyui/utilities/styled/modal.css";
+
+  // @import "@kidonng/daisyui/utilities/unstyled/drawer.css";
+  // @import "@kidonng/daisyui/utilities/styled/drawer.css";
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  padding-right: 2px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+
+}
+
+::-webkit-scrollbar-thumb {
+  background: darkgrey;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: grey;
+}
+
+#app {
+  background-color: hsla(var(--b1), var(--un-bg-opacity, 1));
+  color: hsla(var(--bc), var(--un-text-opacity, 1));
+}
