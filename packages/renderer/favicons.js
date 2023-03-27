@@ -25,8 +25,14 @@ const cwd = path.dirname(fileURLToPath(import.meta.url)),
     version: packageJson.version, // Your application's version string. `string`
     manifestMaskable: true,
     icons: {
-      android: true,
-      appleIcon: true,
+      android: {
+        offset: 7,
+        background: true
+      },
+      appleIcon: {
+        offset: 5,
+        background: true
+      },
       appleStartup: false,
       favicons: true,
       windows: false,
