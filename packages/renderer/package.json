@@ -2,7 +2,7 @@
   "name": "@presence/renderer",
   "title": "Presence",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "A ms graph API test",
   "author": "Axel Meinhardt <26243798+ameinhardt@users.noreply.github.com>",
