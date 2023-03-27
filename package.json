@@ -1,6 +1,6 @@
 {
   "name": "presence",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "an utility for accessing ms graph",
   "author": "Axel Meinhardt <26243798+ameinhardt@users.noreply.github.com>",
   "license": "MIT",

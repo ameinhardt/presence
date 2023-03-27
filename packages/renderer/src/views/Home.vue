@@ -38,9 +38,9 @@
           <icon-mdi-login v-else />
         </button>
       </template>
-      <div v-if="loadingMyself" />
+      <div v-if="loadingData" />
       <div
-        v-else-if="myselfError"
+        v-else-if="dataError"
         class="alert alert-warning mt-8 max-w-lg mx-auto"
       >
         <icon-mdi-alert-circle-outline />
@@ -49,16 +49,33 @@
         </span>
       </div>
       <div
-        v-else-if="myself"
+        v-else-if="data"
       >
-        {{ $t('pages.home.greeting', [myself?.givenName]) }}
-        <span
-          v-if="myself.presence?.availability"
-          class="ml-2 badge"
-          :class="getBadgeColor(myself.presence.availability)"
-        >
-          {{ myself.presence.availability }}
-        </span>
+        <div class="mb-2">
+          {{ $t('pages.home.greeting', [data.user.givenName]) }}
+          <span
+            v-if="data.presence?.availability"
+            class="ml-2 badge"
+            :class="getBadgeColor(data.presence.availability)"
+          >
+            {{ data.presence.availability }}
+          </span>
+        </div>
+        <div class="grid grid-cols-[max-content_1fr] gap-x-8 gap-y-2">
+          <template
+            v-for="colleage in data.colleagues"
+            :key="colleage.id"
+          >
+            <span>{{ colleage.displayName }}</span>
+            <span
+              v-if="data.colleaguesPrecenseById[colleage.id!].availability"
+              class="ml-2 badge"
+              :class="getBadgeColor(data.colleaguesPrecenseById[colleage.id!].availability!)"
+            >
+              {{ data.colleaguesPrecenseById[colleage.id!].availability }}
+            </span>
+          </template>
+        </div>
       </div>
       <div
         v-else
@@ -74,7 +91,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { Presence, User } from '@microsoft/microsoft-graph-types-beta';
+import type { Person, Presence, User } from '@microsoft/microsoft-graph-types-beta';
 import { useAsyncState } from '@vueuse/core';
 import { ref, watch } from 'vue';
 import Card from '../components/Card.vue';
@@ -83,11 +100,17 @@ import Help from '../components/presence/Help.vue';
 import Settings from '../components/presence/Settings.vue';
 import { useProfileStore } from '../stores/profile';
 
+interface PresenceData {
+  user: User;
+  presence: Presence;
+  colleagues: Array<Pick<Person, 'id' | 'displayName'>>;
+  colleaguesPrecenseById: Record<string, Presence>
+}
+
 const UUID_REGEX = /^[\da-f]{8}\b(?:-[\da-f]{4}){3}-[\da-f]{12}$/,
   profile = useProfileStore(),
   showHelp = ref(!profile.popupHelp),
   showSettings = ref(!profile.popupSettings);
-  // myself = ref<User>(),
 
 // eslint-disable-next-line no-undef
 async function authFetch<T>(url: RequestInfo | URL, fetchConfig?: RequestInit): Promise<T> {
@@ -105,19 +128,33 @@ async function authFetch<T>(url: RequestInfo | URL, fetchConfig?: RequestInit): 
 }
 
 const
-  { state: myself, execute: getMyself, error: myselfError, isLoading: loadingMyself } = useAsyncState<User | null>(async () => {
+  { state: data, execute: getData, error: dataError, isLoading: loadingData } = useAsyncState<PresenceData | null>(async () => {
     if (!profile.accessToken) {
       return null;
     }
-    const user = await authFetch<User>('https://graph.microsoft.com/beta/me?$select=id,givenName');
+    const user = await authFetch<Pick<Person, 'id' | 'givenName'>>('https://graph.microsoft.com/beta/me?$select=id,givenName');
     if (!user.id?.match(UUID_REGEX)) {
       throw new Error('not a AAD user');
     }
-    if (!user.presence) {
-      user.presence = await authFetch<Presence>(`https://graph.microsoft.com/beta/users/${user.id}/presence`);
-      // presence.availability = Available, AvailableIdle, Away, BeRightBack, Busy,  BusyIdle, DoNotDisturb, Offline, PresenceUnknown
+    // presence.availability = Available, AvailableIdle, Away, BeRightBack, Busy,  BusyIdle, DoNotDisturb, Offline, PresenceUnknown
+    const presence = await authFetch<Presence>(`https://graph.microsoft.com/beta/users/${user.id}/presence`),
+      { value: colleagues } = await authFetch<{ value: Array<Pick<Person, 'id' | 'displayName'>>}>('https://graph.microsoft.com/beta/me/people?$select=id,displayName&$top=30&$orderby=displayName%20asc'),
+      { value: colleaguesPrecense } = await authFetch<{ value: Array<Presence>}>('https://graph.microsoft.com/beta/communications/getPresencesByUserId', {
+        method: 'POST',
+        body: JSON.stringify({
+          ids: colleagues.map(({ id }) => id)
+        })
+      }),
+      colleaguesPrecenseById: Record<string, Presence> = {};
+    for (const colleaguePrecense of colleaguesPrecense) {
+      colleaguesPrecenseById[colleaguePrecense.id!] = colleaguePrecense;
     }
-    return user;
+    return {
+      user,
+      presence,
+      colleagues,
+      colleaguesPrecenseById
+    };
   }, null, {
     immediate: false
   });
@@ -134,10 +171,10 @@ watch([showHelp, showSettings], () => {
 
 watch(() => profile.accessToken, async (newToken) => {
   if (newToken) {
-    await getMyself();
+    await getData();
   } else {
-    myself.value = null;
-    myselfError.value = undefined;
+    data.value = null;
+    dataError.value = undefined;
   }
 }, {
   immediate: true
