@@ -1,9 +1,11 @@
 import { StorageSerializers, useLocalStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
 import { computed, readonly, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { refresh } from '../auth';
 import { SUPPORTED_LOCALES } from '../i18n';
-import type { langs } from '../typings/vue-i18n';
+import type { langs, MessageSchema } from '../typings/vue-i18n';
+import { useToastsStore } from './toasts';
 
 export interface ProfileConfig {
   refreshToken?: string;
@@ -33,7 +35,9 @@ export const useProfileStore = defineStore('profile', () => {
     popupSettings = computedForConfig<ProfileConfig['popupSettings']>('popupSettings'),
     refreshToken = computedForConfig<ProfileConfig['refreshToken']>('refreshToken'),
     lang = computedForConfig<ProfileConfig['lang']>('lang'),
-    accessToken = ref<string>();
+    accessToken = ref<string>(),
+    toastsStore = useToastsStore(),
+    i18n = useI18n<MessageSchema, langs>();
   let expiresOn: number | undefined;
 
   async function logout() {
@@ -45,20 +49,32 @@ export const useProfileStore = defineStore('profile', () => {
   async function login() {
     if ((!expiresOn || (expiresOn * 1000) > Date.now() + 60_000) && accessToken?.value) {
       return accessToken.value;
-    } else if (refreshToken?.value) {
-      try {
-        const result = await refresh(refreshToken.value, 'offline_access openid profile User.Read');
-        refreshToken.value = result.refreshToken;
-        accessToken.value = result.accessToken;
-        expiresOn = result.expiresOn;
-        return accessToken.value;
-      } catch (error) {
-        console.error('login failed', error);
-        await logout();
-        throw error;
-      }
+    } else if (!refreshToken?.value) {
+      toastsStore.add({
+        message: i18n.t('stores.profile.noRefreshToken'),
+        type: 'error'
+      });
+      throw new Error('no refreshToken available');
     }
-    throw new Error('no refreshToken available');
+    try {
+      const result = await refresh(refreshToken.value, 'offline_access openid profile User.Read');
+      refreshToken.value = result.refreshToken;
+      accessToken.value = result.accessToken;
+      expiresOn = result.expiresOn;
+      /* toastsStore.add({
+        message: 'logged in!',
+        type: 'success'
+      });*/
+      return accessToken.value;
+    } catch (error) {
+      console.error('login failed', error, error instanceof Error ? error.cause : 'unknown cause');
+      toastsStore.add({
+        message: i18n.t('stores.profile.loginError'),
+        type: 'error'
+      });
+      await logout();
+      throw new Error('login failed', { cause: error });
+    }
   }
 
   function toggleDark() {

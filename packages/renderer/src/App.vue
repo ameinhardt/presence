@@ -17,27 +17,24 @@
       </template>
     </RouterView>
   </main>
-  <BaseToast ref="toast" />
+  <Toast/>
   <UpdatePrompt />
 </template>
 
 <script setup lang="ts">
 import { useTitle } from '@vueuse/core';
-import { nextTick, provide, ref, watch } from 'vue';
+import { nextTick, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
-import BaseToast, { type Toast } from './components/Toast.vue';
+import Toast from './components/Toast.vue';
 import { setLocale } from './i18n';
 import { useProfileStore } from './stores/profile';
 import type { langs, MessageSchema } from './typings/vue-i18n';
-
-export type ToastAdd = (toastCfg: Omit<Toast, 'id'> | string) => Toast | undefined;
 
 const SELECTOR = '#app',
   router = useRouter(),
   profile = useProfileStore(),
   i18n = useI18n<MessageSchema, langs>({ useScope: 'global' }),
-  toast = ref<InstanceType<typeof BaseToast>>(),
   isReady = ref(false);
 
 async function init() {
@@ -47,10 +44,6 @@ async function init() {
 }
 
 init();
-
-provide<ToastAdd>('toast', (toastCfg) =>
-  toast.value?.add(typeof toastCfg === 'string' ? { message: toastCfg } : toastCfg)
-);
 
 /* setup title */
 useTitle(() => {
@@ -90,7 +83,8 @@ function themeTransition() {
   clone.style.left = `${rect.left}px`;
   clone.style.width = `${rect.width}px`;
   clone.style.height = `${rect.height}px`;
-  const triggerElement = document.activeElement as HTMLElement,
+  // https://developer.mozilla.org/en-US/docs/Web/API/Document/activeElement: on macOS systems, elements that aren't text input elements are not typically focusable by default.
+  const triggerElement = document.activeElement as HTMLElement, // === body on safari
     triggerRect = triggerElement.getBoundingClientRect(),
     left = triggerRect.left + triggerRect.width / 2 + window.scrollX,
     top = triggerRect.top + triggerRect.height / 2 + window.scrollY;

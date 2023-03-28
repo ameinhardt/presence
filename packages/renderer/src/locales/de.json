@@ -5,6 +5,7 @@
   "cancel": "Abbrechen",
   "save": "Speichern",
   "reset": "Zurücksetzen",
+  "search": "Suche",
   "pages": {
     "about": {
       "title": "Über",
@@ -42,5 +43,10 @@
       "loadError": "Lizenzen konnten nicht abgerufen werden"
     }
   },
-  "search": "Suche"
+  "stores": {
+    "profile": {
+      "loginError": "Login fehlgeschlagen",
+      "noRefreshToken": "Kein Refreshtoken gefunden"
+    }
+  }
 }

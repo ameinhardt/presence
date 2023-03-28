@@ -24,6 +24,13 @@ console.info(
   'background:transparent'
 );
 
+// transform hash path to history
+router.beforeEach((to, _from, next) =>
+  to.hash.startsWith('#/')
+    ? next(`${to.hash.slice(2)}${location.search}`)
+    : next()
+);
+
 const app = createApp(App)
   .use(createI18n<MessageSchema, langs, false>({
     legacy: false,
