@@ -5,6 +5,7 @@
   "cancel": "Cancel",
   "save": "Save",
   "reset": "Reset",
+  "search": "Search",
   "pages": {
     "about": {
       "title": "About",
@@ -42,5 +43,10 @@
       "loadError": "Licenses could not be fetched"
     }
   },
-  "search": "Search"
+  "stores": {
+    "profile": {
+      "loginError": "Login failed",
+      "noRefreshToken": "No refresh token available"
+    }
+  }
 }

@@ -1,17 +1,23 @@
 <template>
   <Teleport to="#app > main">
-    <div class="toast toast-top toast-end">
+    <div class="toast toast-top toast-end gap-2 p-4">
       <TransitionGroup
-        enter-active-class="animate-slide-in-down animate-duration-500"
+        enter-active-class="animate-slide-in-down animate-duration-1000"
         leave-active-class="animate-fade-out animate-duration-500"
       >
         <div
-          v-for="toast in toasts"
+          v-for="toast in store.toasts"
           :key="toast.id"
-          class="alert flex items-center w-xs shadow top-3"
+          class="alert flex flex-row items-center w-xs shadow top-3 animate-ease relative space-y-0"
           :class="`alert-${toast.type ?? 'info'}`"
           role="alert"
         >
+          <button
+            class="pointer-events-auto btn btn-sm btn-circle btn-ghost text-lg absolute right-2 top-4"
+            @click="store.remove(toast)"
+          >
+            <icon-mdi-close />
+          </button>
           <div
             v-if="toast.type"
             class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg"
@@ -21,15 +27,9 @@
             <icon-mdi-alert-circle-outline v-if="toast.type === 'warning'" />
             <icon-mdi-alert-box-outline v-if="toast.type === 'error'" />
           </div>
-          <div class="ml-3 text-sm font-normal">
+          <div class="text-sm font-normal flex-1">
             {{ toast.message }}
           </div>
-          <button
-            class="ml-auto inline-flex pointer-events-auto btn btn-sm btn-circle btn-ghost text-lg"
-            @click="remove(toast)"
-          >
-            <icon-mdi-close />
-          </button>
         </div>
       </TransitionGroup>
     </div>
@@ -37,46 +37,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { useToastsStore } from '../stores/toasts';
 
-export interface ToastConfig {
-  message: string;
-  type?: 'info' | 'success' | 'warning' | 'error';
-  duration?: number;
-}
-
-export interface Toast extends Omit<ToastConfig, 'duration'> {
-  id: number;
-  timeoutHandle?: number;
-}
-
-const toasts = ref<Array<Toast>>([]);
-let counter = 0;
-
-function remove(burned: Toast) {
-  if (burned.timeoutHandle != null) {
-    clearTimeout(burned.timeoutHandle);
-  }
-  const index = toasts.value.indexOf(burned);
-  if (index >= 0) {
-    toasts.value.splice(index, 1);
-  }
-}
-
-function add({ message, type, duration }: Omit<ToastConfig, 'id'>) {
-  const toast : Toast = {
-    id: counter++,
-    message,
-    type
-  };
-  if (duration == null || duration > 0) {
-    toast.timeoutHandle = window.setTimeout(() => remove(toast), duration ?? 3000);
-  }
-  toasts.value.push(toast);
-  return toast;
-}
-
-defineExpose({ add, remove });
+const store = useToastsStore();
 </script>
 
 <style lang="scss"></style>
