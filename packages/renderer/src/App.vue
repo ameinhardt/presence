@@ -17,7 +17,7 @@
       </template>
     </RouterView>
   </main>
-  <Toast/>
+  <Toast />
   <UpdatePrompt />
 </template>
 

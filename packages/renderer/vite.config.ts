@@ -66,7 +66,7 @@ const cwd = path.dirname(fileURLToPath(import.meta.url)),
                 "img-src 'self' data:",
                 'script-src \'self\' \'unsafe-inline\' \'sha256-ct2cmDrjwRYrBw3m+DuLhBKOEgYkooFWchOrV7oYwk0=\'',
                 "script-src-attr 'none'",
-                'style-src \'self\' \'sha256-QdW0Dgs8JJzzLde7S+TTJz94ftFWNWFdmVlNUU4qZYY=\'',
+                'style-src \'self\' \'sha256-aLyAoHQSihZHizj8Jvg8n8JZyrxQlP/ieRujZyA4pKA=\'',
                 "object-src 'none';upgrade-insecure-requests"
               ].join(';')
             }

@@ -18,7 +18,7 @@ export interface ProfileConfig {
 const config = useLocalStorage<ProfileConfig>('config', {
   popupHelp: false,
   popupSettings: false,
-  prefersDark: false,
+  prefersDark: window.matchMedia('(prefers-color-scheme: dark)').matches,
   lang: navigator.languages.map((lang) => lang.split('-')[0] as langs).find((lang) => ~SUPPORTED_LOCALES.indexOf(lang)) ?? 'en'
 }, { serializer: StorageSerializers.object });
 
@@ -64,7 +64,7 @@ export const useProfileStore = defineStore('profile', () => {
       /* toastsStore.add({
         message: 'logged in!',
         type: 'success'
-      });*/
+      }); */
       return accessToken.value;
     } catch (error) {
       console.error('login failed', error, error instanceof Error ? error.cause : 'unknown cause');
