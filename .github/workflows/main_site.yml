@@ -61,6 +61,9 @@ jobs:
       env:
         VITE_AUTH_CLIENT_ID: 'de8bc8b5-d9f9-48b1-a8ad-b748da725064'
 
+    - name: Copy the fallback html
+      run: cp packages/renderer/dist/index.html packages/renderer/dist/404.html
+
     - name: Setup Pages
       uses: actions/configure-pages@v3
 
